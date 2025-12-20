@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-#Bash script that displays
-
-for x in *
+# Script to display file names after the first dash
+for file in *
 do
-
-    echo "$x"
-
+    echo "$file" | cut -d'-' -f2-
 done
