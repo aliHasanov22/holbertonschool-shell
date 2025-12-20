@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Bash script that displays
+
+for x in *
+do
+
+    echo "$x"
+
+done
