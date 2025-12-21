@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 #write a Bash script that groups visitors by IP and HTTP status code
-LOG_FILE="apache-access.log"
-awk '{count[$1" "$9]++} END {for (i in count) print count[i], i}' "$LOG_FILE" | sort -rn
+LOG_FILE="apache-access (1).log"
+# Check if the file exists
+if [[ ! -f "$LOG_FILE" ]]; then
+    echo "Error: $LOG_FILE not found."
+    exit 1
+fi
+awk '{ count[$1" "$9]++ } END { for (key in count) print count[key], key }' "$LOG_FILE"
