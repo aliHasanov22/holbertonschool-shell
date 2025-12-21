@@ -1,8 +1,3 @@
 #!/usr/bin/env bash
 #write a Bash script that groups visitors by IP and HTTP status code
-LOG_FILE="apache-access.log"
-if [[ ! -f "$LOG_FILE" ]]; then
-    echo "Error: $LOG_FILE not found."
-    exit 1
-fi
-awk '{ count[$1" "$9]++ } END { for (key in count) print count[key], key }' "$LOG_FILE"
+awk '{count[$1" "$9]++} END {for (pair in count) print count[pair], pair}' apache-access.log | sort -rn
