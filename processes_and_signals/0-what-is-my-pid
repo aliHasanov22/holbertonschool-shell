@@ -1,2 +1,3 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashi
+#Write a Bash script that displays its own PID
 echo $$
