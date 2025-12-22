@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ps -ef | awk '/bash/ {print $0}'
