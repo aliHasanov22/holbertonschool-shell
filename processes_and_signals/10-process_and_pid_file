@@ -9,21 +9,14 @@
 #do 
  #  echo 'To infinity and beyond'
 #done
-#!/usr/bin/env bash
-
 PIDFILE="/var/run/myscript.pid"
-CREATED=0
 
-# Try to create PID file
-if echo $$ > "$PIDFILE" 2>/dev/null; then
-    CREATED=1
-fi
+# Create PID file or exit if it fails
+echo $$ > "$PIDFILE" || exit 1
 
 sigterm() {
     echo "I hate the kill command"
-    if [ "$CREATED" -eq 1 ]; then
-        rm -f "$PIDFILE"
-    fi
+    rm -f "$PIDFILE"
     exit 0
 }
 
@@ -32,9 +25,7 @@ sigint() {
 }
 
 sigquit() {
-    if [ "$CREATED" -eq 1 ]; then
-        rm -f "$PIDFILE"
-    fi
+    rm -f "$PIDFILE"
     exit 0
 }
 
@@ -46,4 +37,3 @@ while true; do
     echo "To infinity and beyond"
     sleep 1
 done
-
