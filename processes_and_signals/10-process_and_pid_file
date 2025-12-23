@@ -1,39 +1,12 @@
 #!/usr/bin/env bash
 #bash script
-#echo $$ > /var/run/myscript.pid 2>/dev/null || exit 1
-#trap 'echo "I hate the kill command"' SIGTERM
-#trap 'echo "Y U no love me?!"' SIGINT
-#trap 'rm -f /var/run/myscript.pid ; exit' EXIT
-#trap 'exit' SIGQUIT
-#while true
-#do 
- #  echo 'To infinity and beyond'
-#done
-PIDFILE="/var/run/myscript.pid"
-
-# Create PID file or exit if it fails
-echo $$ > "$PIDFILE" || exit 1
-
-sigterm() {
-    echo "I hate the kill command"
-    rm -f "$PIDFILE"
-    exit 0
-}
-
-sigint() {
-    echo "Y U no love me?!"
-}
-
-sigquit() {
-    rm -f "$PIDFILE"
-    exit 0
-}
-
-trap sigterm SIGTERM
-trap sigint SIGINT
-trap sigquit SIGQUIT
-
-while true; do
-    echo "To infinity and beyond"
-    sleep 1
+echo $$ > /var/run/myscript.pid 2>/dev/null || exit 1
+trap 'echo "I hate the kill command"' SIGTERM
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'rm -f /var/run/myscript.pid ; exit' EXIT
+trap 'exit' SIGQUIT
+while true
+do 
+   echo 'To infinity and beyond'
 done
+
