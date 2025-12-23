@@ -10,25 +10,40 @@
  #  echo 'To infinity and beyond'
 #done
 #!/usr/bin/env bash
-PIDFILE="/var/run/myscript.pid"
-# Try to create PID file (do NOT exit if it fails)
-echo $$ > "$PIDFILE" 
 
-sigterm_handler() {
+PIDFILE="/var/run/myscript.pid"
+CREATED=0
+
+# Try to create PID file
+if echo $$ > "$PIDFILE" 2>/dev/null; then
+    CREATED=1
+fi
+
+sigterm() {
     echo "I hate the kill command"
+    if [ "$CREATED" -eq 1 ]; then
+        rm -f "$PIDFILE"
+    fi
     exit 0
 }
-sigint_handler() {
+
+sigint() {
     echo "Y U no love me?!"
 }
-sigquit_handler() {
-    rm -f "$PIDFILE"
+
+sigquit() {
+    if [ "$CREATED" -eq 1 ]; then
+        rm -f "$PIDFILE"
+    fi
     exit 0
 }
-trap sigterm_handler SIGTERM
-trap sigint_handler SIGINT
-trap sigquit_handler SIGQUIT
+
+trap sigterm SIGTERM
+trap sigint SIGINT
+trap sigquit SIGQUIT
+
 while true; do
     echo "To infinity and beyond"
-    sleep 3
+    sleep 1
 done
+
