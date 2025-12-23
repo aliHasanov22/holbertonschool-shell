@@ -9,20 +9,18 @@
 #do 
  #  echo 'To infinity and beyond'
 #done
+#!/usr/bin/env bash
 PIDFILE="/var/run/myscript.pid"
-# Create PID file
-echo $$ > "$PIDFILE" 2>/dev/null || exit 1
-# SIGTERM handler
+# Try to create PID file (do NOT exit if it fails)
+echo $$ > "$PIDFILE" 2>/dev/null
+
 sigterm_handler() {
     echo "I hate the kill command"
-    rm -f "$PIDFILE"
     exit 0
 }
-# SIGINT handler
 sigint_handler() {
     echo "Y U no love me?!"
 }
-# SIGQUIT handler
 sigquit_handler() {
     rm -f "$PIDFILE"
     exit 0
@@ -30,7 +28,6 @@ sigquit_handler() {
 trap sigterm_handler SIGTERM
 trap sigint_handler SIGINT
 trap sigquit_handler SIGQUIT
-# Infinite loop
 while true; do
     echo "To infinity and beyond"
     sleep 1
